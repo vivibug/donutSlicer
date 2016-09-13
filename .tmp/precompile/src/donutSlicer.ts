@@ -24,7 +24,7 @@
  *  THE SOFTWARE.
  */
 
-module powerbi.extensibility.visual {
+module powerbi.extensibility.visual.PBI_CV_E6C67BB3_785C_4D89_88DB_DA2618987482  {
 
     /**
     *
