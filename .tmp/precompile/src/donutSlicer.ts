@@ -58,18 +58,11 @@ module powerbi.extensibility.visual.PBI_CV_E6C67BB3_785C_4D89_88DB_DA2618987482 
     };
 
     export class DonutSlicer implements IVisual {
-        private target: HTMLElement;
-        private updateCount: number;
 
         constructor(options: VisualConstructorOptions) {
-            console.log('Visual constructor', options);
-            this.target = options.element;
-            this.updateCount = 0;
         }
 
         public update(options: VisualUpdateOptions) {
-            console.log('Visual update', options);
-            this.target.innerHTML = `<p>Update count: <em>${(this.updateCount++)}</em></p>`;
         }
 
         public destroy(): void {

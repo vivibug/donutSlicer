@@ -35,13 +35,8 @@ var powerbi;
                 ;
                 var DonutSlicer = (function () {
                     function DonutSlicer(options) {
-                        console.log('Visual constructor', options);
-                        this.target = options.element;
-                        this.updateCount = 0;
                     }
                     DonutSlicer.prototype.update = function (options) {
-                        console.log('Visual update', options);
-                        this.target.innerHTML = "<p>Update count: <em>" + (this.updateCount++) + "</em></p>";
                     };
                     DonutSlicer.prototype.destroy = function () {
                         //TODO: Perform any cleanup tasks here
