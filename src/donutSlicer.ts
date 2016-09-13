@@ -53,8 +53,8 @@ module powerbi.extensibility.visual {
     interface DonutSlicerDataPoint {
         count: number;
         category: string;
-        color: string;
-        selectionId: ISelectionId;
+        //color: string;
+        //selectionId: ISelectionId;
     };
 
     export class DonutSlicer implements IVisual {
@@ -71,6 +71,9 @@ module powerbi.extensibility.visual {
             ];
 
             let viewModel: DonutSlicerViewModel = { dataPoints: testData };
+
+            let width = options.viewport.width;
+            let height = options.viewport.height;
         }
 
         public destroy(): void {
