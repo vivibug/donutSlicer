@@ -4,6 +4,7 @@
     "displayName": "Donut Slicer",
     "guid": "PBI_CV_E6C67BB3_785C_4D89_88DB_DA2618987482",
     "visualClassName": "Visual",
+    "visualClassName": "DonutSlicer",
     "version": "1.0.0",
     "description": "",
     "supportUrl": "",
