@@ -51,7 +51,7 @@ module powerbi.extensibility.visual {
     * 
     **/
     interface DonutSlicerDataPoint {
-        value: number;
+        count: number;
         category: string;
         color: string;
         selectionId: ISelectionId;
@@ -63,6 +63,14 @@ module powerbi.extensibility.visual {
         }
 
         public update(options: VisualUpdateOptions) {
+            let testData: DonutSlicerDataPoint[] = [
+                { count: 10, category: 'Abulia' },
+                { count: 20, category: 'Betelgeuse' },
+                { count: 30, category: 'Cantaloupe' },
+                { count: 40, category: 'Dijkstra'}
+            ];
+
+            let viewModel: DonutSlicerViewModel = { dataPoints: testData };
         }
 
         public destroy(): void {
