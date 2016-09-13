@@ -74,6 +74,7 @@ module powerbi.extensibility.visual {
 
             let width = options.viewport.width;
             let height = options.viewport.height;
+            let radius = Math.min(width, height) / 2;
         }
 
         public destroy(): void {
