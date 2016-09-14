@@ -78,6 +78,8 @@ module powerbi.extensibility.visual {
             let height = options.viewport.height;
             let radius = Math.min(width, height) / 2;
             var donutWidth = 50;
+            var legendRectSize = 18;
+            var legendSpacing = 4;
 
             // Defines a color scale. If there are more than 20 entries in the 
             // dataset, d3 will start to re-use colors.
