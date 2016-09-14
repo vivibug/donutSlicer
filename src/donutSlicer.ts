@@ -52,15 +52,16 @@ module powerbi.extensibility.visual {
     **/
     interface DonutSlicerDataPoint {
         count: number;
-        category: string;
-        //color: string;
-        //selectionId: ISelectionId;
+        //category: string;
     };
 
     export class DonutSlicer implements IVisual {
         private svg: d3.Selection<SVGElement>;
+        private host: IVisualHost;
+        private donutDataPoints: DonutSlicerDataPoint[];
 
         constructor(options: VisualConstructorOptions) {
+            this.host = options.host;
             let svg = this.svg = d3.select(options.element)
                 .append('svg')
                 .append('g')
@@ -68,35 +69,56 @@ module powerbi.extensibility.visual {
         }
 
         public update(options: VisualUpdateOptions) {
-            let testData: DonutSlicerDataPoint[] = [
+            /**let data: DonutSlicerDataPoint[] = [
+                { count: 10, category: 'Abulia' },
+                { count: 20, category: 'Betelgeuse' },
+                { count: 30, category: 'Cantaloupe' },
+                { count: 40, category: 'Dijkstra'}
+            ];**/
+
+            let data = [
                 { count: 10, category: 'Abulia' },
                 { count: 20, category: 'Betelgeuse' },
                 { count: 30, category: 'Cantaloupe' },
                 { count: 40, category: 'Dijkstra'}
             ];
 
-            let viewModel: DonutSlicerViewModel = { dataPoints: testData };
+            //let viewModel: DonutSlicerViewModel = { dataPoints: data };
+            //this.pieDataPoints = viewModel.dataPoints;
 
             let width = options.viewport.width;
             let height = options.viewport.height;
             let radius = Math.min(width, height) / 2;
+            var donutWidth = 50;
 
             // Defines a color scale. If there are more than 20 entries in the 
             // dataset, d3 will start to re-use colors.
-            let color = d3.scale.category20b;
+            let color = d3.scale.category20b();
 
             // Set the width, height of element.
-            this.svg.attr({
-                width: width,
-                height: height
-            }); 
-
-            // Define the radius, which determines the overall size of the chart.
-            this.svg.attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
+            var donut = this.svg
+                .attr("width", width)
+                .attr("height", height)
+                .attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
 
             var arc = d3.svg.arc()
-                .innerRadius(0)
+                .innerRadius(radius - donutWidth)
                 .outerRadius(radius);
+            
+            // Define the start and end angles of the segments in the donut slicer.
+            var pie = d3.layout.pie()
+                .value(function(d) { return d; });
+
+            var path = donut.selectAll('path')
+                .data(pie(data.map(function(n) {
+                    return n.count;
+                })))
+                .enter()
+                .append('path')
+                .attr('d', <any>arc)
+                .attr('fill', function(d, i) {
+                    return Math.random();
+                }); 
 
         }
 
