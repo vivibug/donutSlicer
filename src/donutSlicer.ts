@@ -107,10 +107,12 @@ module powerbi.extensibility.visual {
                 .enter()
                 .append('path')
                 .attr('d', <any>arc)
-                .attr('fill', function(d, i) {
-                    return Math.random();
-                }); 
-
+                .attr({
+                    d: <any>arc,
+                    fill: function(d, i) {
+                    return color(<any>i);
+                }
+            }); 
         }
 
         public destroy(): void {
