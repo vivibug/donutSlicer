@@ -66,6 +66,14 @@ module powerbi.extensibility.visual {
                 .append('svg');
         }
 
+        /**
+        * Updates the state of the visual. Every sequential databinding and resize will
+        * call update.
+        * 
+        * @function
+        * @param {VisualUpdateOptions} options             - Contains references to the size of the container and the dataView which contains all the data the visual had queried.
+        *
+        **/
         public update(options: VisualUpdateOptions) {
             let data: DonutSlicerDataPoint[] = [
                 { count: 10, category: 'Abulia' },
@@ -113,6 +121,36 @@ module powerbi.extensibility.visual {
                     return color(<any>i);
                 }
             }); 
+
+            var legend = donut.selectAll('.legend')
+                .data(color.domain())
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', function(d, i) {
+                    var height = legendRectSize + legendSpacing;
+                    var offset = height * color.domain().length / 2;
+                    var horz = -2 * legendRectSize;
+                    var vert = i * height - offset;
+                    return 'translate('+ horz + ',' + vert + ')';
+                });
+
+            // Appending the colored squares for the legend.
+            // The fill and stroke are each passed color, from which they can retrieve
+            // the appropriate color for the background and border. Each legend element
+            // will pass its label into color(); for instance, the first will call
+            // color('Abulia') and be given #000000 in return.
+            legend.append('rect')
+                .attr('width', legendRectSize)
+                .attr('height', legendRectSize)
+                .style('fill', color)
+                .style('stroke', color);
+
+            // Appending the text label for each element of the legend.
+            legend.append('text')
+                .attr('x', legendRectSize + legendSpacing)
+                .attr('y', legendRectSize)
+                .text(function(d) { return d; });
         }
 
         public destroy(): void {
