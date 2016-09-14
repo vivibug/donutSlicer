@@ -81,9 +81,6 @@ module powerbi.extensibility.visual {
                 { count: 40, category: 'Dijkstra'}
             ];
 
-            //let viewModel: DonutSlicerViewModel = { dataPoints: data };
-            //this.pieDataPoints = viewModel.dataPoints;
-
             let width = options.viewport.width;
             let height = options.viewport.height;
             let radius = Math.min(width, height) / 2;
@@ -93,16 +90,16 @@ module powerbi.extensibility.visual {
             // dataset, d3 will start to re-use colors.
             let color = d3.scale.category20b();
 
+            var arc = d3.svg.arc()
+                .innerRadius(radius - donutWidth)
+                .outerRadius(radius);
+
             // Set the width, height of element.
             var donut = this.svg
                 .attr("width", width)
                 .attr("height", height)
                 .append('g')
                 .attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
-
-            var arc = d3.svg.arc()
-                .innerRadius(radius - donutWidth)
-                .outerRadius(radius);
             
             // Define the start and end angles of the segments in the donut slicer.
             var pie = d3.layout.pie()
