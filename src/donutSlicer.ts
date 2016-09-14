@@ -52,7 +52,7 @@ module powerbi.extensibility.visual {
     **/
     interface DonutSlicerDataPoint {
         count: number;
-        //category: string;
+        category: string;
     };
 
     export class DonutSlicer implements IVisual {
@@ -63,9 +63,7 @@ module powerbi.extensibility.visual {
         constructor(options: VisualConstructorOptions) {
             this.host = options.host;
             let svg = this.svg = d3.select(options.element)
-                .append('svg')
-                .append('g')
-                .classed('donutSlicer', true);
+                .append('svg');
         }
 
         public update(options: VisualUpdateOptions) {
@@ -76,7 +74,7 @@ module powerbi.extensibility.visual {
                 { count: 40, category: 'Dijkstra'}
             ];**/
 
-            let data = [
+            let data: DonutSlicerDataPoint[] = [
                 { count: 10, category: 'Abulia' },
                 { count: 20, category: 'Betelgeuse' },
                 { count: 30, category: 'Cantaloupe' },
@@ -99,6 +97,7 @@ module powerbi.extensibility.visual {
             var donut = this.svg
                 .attr("width", width)
                 .attr("height", height)
+                .append('g')
                 .attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
 
             var arc = d3.svg.arc()
