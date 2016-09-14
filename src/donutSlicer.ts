@@ -55,6 +55,18 @@ module powerbi.extensibility.visual {
         category: string;
     };
 
+    /**
+    * Function that converts queried data into a view model that will be used by the visual.
+    *
+    * @function
+    * @param {VisualUpdateOptions} options              - Contains references to the size of the container and the dataView which contains all the data the visual has queried.
+    * @param {IVisualHost} host                         - Contains references to the host which contains services
+    *
+    **/
+    function visualTransform(options: VisualUpdateOptions, host: IVisualHost): DonutSlicerViewModel {
+        return null;
+    }
+
     export class DonutSlicer implements IVisual {
         private svg: d3.Selection<SVGElement>;
         private host: IVisualHost;
