@@ -91,11 +91,13 @@ module powerbi.extensibility.visual {
                 height: height
             }); 
 
+            // Define the radius, which determines the overall size of the chart.
             this.svg.attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
 
             var arc = d3.svg.arc()
                 .innerRadius(0)
                 .outerRadius(radius);
+
         }
 
         public destroy(): void {
