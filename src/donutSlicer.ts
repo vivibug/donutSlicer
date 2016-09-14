@@ -58,8 +58,13 @@ module powerbi.extensibility.visual {
     };
 
     export class DonutSlicer implements IVisual {
+        private svg: d3.Selection<SVGElement>;
 
         constructor(options: VisualConstructorOptions) {
+            let svg = this.svg = d3.select(options.element)
+                .append('svg')
+                .append('g')
+                .classed('donutSlicer', true);
         }
 
         public update(options: VisualUpdateOptions) {
@@ -75,6 +80,22 @@ module powerbi.extensibility.visual {
             let width = options.viewport.width;
             let height = options.viewport.height;
             let radius = Math.min(width, height) / 2;
+
+            // Defines a color scale. If there are more than 20 entries in the 
+            // dataset, d3 will start to re-use colors.
+            let color = d3.scale.category20b;
+
+            // Set the width, height of element.
+            this.svg.attr({
+                width: width,
+                height: height
+            }); 
+
+            this.svg.attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
+
+            var arc = d3.svg.arc()
+                .innerRadius(0)
+                .outerRadius(radius);
         }
 
         public destroy(): void {
