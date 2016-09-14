@@ -67,13 +67,6 @@ module powerbi.extensibility.visual {
         }
 
         public update(options: VisualUpdateOptions) {
-            /**let data: DonutSlicerDataPoint[] = [
-                { count: 10, category: 'Abulia' },
-                { count: 20, category: 'Betelgeuse' },
-                { count: 30, category: 'Cantaloupe' },
-                { count: 40, category: 'Dijkstra'}
-            ];**/
-
             let data: DonutSlicerDataPoint[] = [
                 { count: 10, category: 'Abulia' },
                 { count: 20, category: 'Betelgeuse' },
