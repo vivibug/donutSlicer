@@ -64,7 +64,29 @@ module powerbi.extensibility.visual {
     *
     **/
     function visualTransform(options: VisualUpdateOptions, host: IVisualHost): DonutSlicerViewModel {
-        return null;
+        // Return null if the data we are expecting is null.
+        if (!options
+            || !options.dataViews
+            || !options.dataViews[0])
+            return null;
+
+        let donutDataPoints: DonutSlicerDataPoint[] = [];
+        let objects = options.dataViews[0].metadata.objects;
+
+        for (let slice of options.dataViews[0].table.rows) {
+            if (slice[1]) {
+                donutDataPoints.push({
+                    count: slice[0],
+                    category: slice[1]
+                });
+            }
+        }
+
+        let viewModel: DonutSlicerViewModel = {
+            dataPoints: donutDataPoints
+        };
+
+        return viewModel;
     }
 
     export class DonutSlicer implements IVisual {
@@ -94,6 +116,7 @@ module powerbi.extensibility.visual {
                 { count: 40, category: 'Dijkstra'}
             ];
 
+            let viewModel: DonutSlicerViewModel = visualTransform(options, this.host);
             let width = options.viewport.width;
             let height = options.viewport.height;
             let radius = Math.min(width, height) / 2;
