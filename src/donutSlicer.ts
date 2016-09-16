@@ -64,29 +64,36 @@ module powerbi.extensibility.visual {
     *
     **/
     function visualTransform(options: VisualUpdateOptions, host: IVisualHost): DonutSlicerViewModel {
-        // Return null if the data we are expecting is null.
+        let viewModel: DonutSlicerViewModel = {
+            dataPoints: []
+        };
+
         if (!options
             || !options.dataViews
-            || !options.dataViews[0])
-            return null;
+            || !options.dataViews[0]
+            || !options.dataViews[0].categorical
+            || !options.dataViews[0].categorical.categories
+            || !options.dataViews[0].categorical.categories[0].source
+            || !options.dataViews[0].categorical.values)
+                return viewModel;
+
+        let categorical = options.dataViews[0].categorical;
+        let category = categorical.categories[0];
+        let dataValue = categorical.values[0];
 
         let donutDataPoints: DonutSlicerDataPoint[] = [];
         let objects = options.dataViews[0].metadata.objects;
 
-        for (let slice of options.dataViews[0].table.rows) {
-            if (slice[1]) {
-                donutDataPoints.push({
-                    count: slice[0],
-                    category: slice[1]
-                });
-            }
+        for (let i = 0, len = Math.max(category.values.length, dataValue.values.length); i < len; i++) {
+            donutDataPoints.push({
+                count: dataValue.values[i],
+                category: category.values[i]
+            });
         }
 
-        let viewModel: DonutSlicerViewModel = {
-            dataPoints: donutDataPoints
+        return {
+            dataPoints: donutDataPoints,
         };
-
-        return viewModel;
     }
 
     export class DonutSlicer implements IVisual {
