@@ -109,12 +109,12 @@ module powerbi.extensibility.visual {
         *
         **/
         public update(options: VisualUpdateOptions) {
-            let data: DonutSlicerDataPoint[] = [
+            /**let data: DonutSlicerDataPoint[] = [
                 { count: 10, category: 'Abulia' },
                 { count: 20, category: 'Betelgeuse' },
                 { count: 30, category: 'Cantaloupe' },
                 { count: 40, category: 'Dijkstra'}
-            ];
+            ];**/
 
             let viewModel: DonutSlicerViewModel = visualTransform(options, this.host);
             let width = options.viewport.width;
@@ -144,7 +144,7 @@ module powerbi.extensibility.visual {
                 .value(function(d) { return d; });
 
             var path = donut.selectAll('path')
-                .data(pie(data.map(function(n) {
+                .data(pie(viewModel.dataPoints.map(function(n) {
                     return n.count;
                 })))
                 .enter()
